@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Person } from '@repo/types/app'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
+  const person: Person = {
+    name: "John Doe",
+    age: 25,
+  };
+
+  console.log(person);
+
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>
