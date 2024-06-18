@@ -21,7 +21,10 @@ export default function RootLayout({
     age: 25,
   };
 
-  const animal: Animal = {};
+  const animal: Animal = {
+    claws: true,
+    name: "Tiger",
+  };
 
   console.log(person);
 
