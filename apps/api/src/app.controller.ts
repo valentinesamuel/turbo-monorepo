@@ -1,13 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException } from '@nestjs/common';
 import { AppService } from './app.service';
-import { BugsnagService } from '@schramautoparts/nest-bugsnag';
+import * as Sentry from '@sentry/node';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private readonly bugsnag: BugsnagService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getHello(): string {
@@ -17,10 +14,10 @@ export class AppController {
   @Get('error')
   getError() {
     try {
-      throw new Error('This is a test error');
+      throw new Error('Something went wrong');
     } catch (e) {
-      this.bugsnag.instance.notify(e);
-      return e;
+      Sentry.captureException(e);
+      return new HttpException(e.message, 500);
     }
   }
 }
